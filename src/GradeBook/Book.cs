@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GradeBook
 {
-    class Book
+    public class Book
     {
         // Constructor method on class to avoid null reference error, must have same as class and no return type
         public Book(string name)
@@ -18,27 +18,23 @@ namespace GradeBook
 
         }
 
-        public void ShowStatistics()
+        public Statistics GetStatistics()
         {
+            var result = new Statistics();
+            result.Average = 0.0;
+            result.High = double.MinValue;
+            result.Low = double.MaxValue;
 
-            // var grades = new List<double>() {1.1, 2.2, 3.3, 4.4};
-            // grades.Add(5.5);
-            var result = 0.0;
-            var highGrade = double.MinValue;
-            var lowGrade = double.MaxValue;
-
-            foreach(var number in grades)
+            foreach(var grade in grades)
             {
-                highGrade = Math.Max(number, highGrade);
-                lowGrade = Math.Min(number, lowGrade);
-                result += number;
+                result.High = Math.Max(grade, result.High);
+                result.Low = Math.Min(grade, result.Low);
+                result.Average += grade;
             }
 
-            result /= grades.Count;
-            Console.WriteLine($"The average grade is: {result:N1}");
-            Console.WriteLine($"The lowest grade is: {lowGrade:N1}");
-            Console.WriteLine($"The highest grade is: {highGrade:N1}");
+            result.Average /= grades.Count;
 
+            return result;
         } 
 
         private List<double> grades;
